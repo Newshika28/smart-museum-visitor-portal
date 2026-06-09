@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI';
+            background: #0f172a;
+            color: white;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 40px;
+            background: #020617;
+        }
+
+        .header h2 {
+            color: #facc15;
+        }
+
+        .header a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .container {
+            padding: 40px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(30,41,59,0.8);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: center;
+        }
+
+        th {
+            background: #020617;
+            color: #facc15;
+        }
+
+        tr:nth-child(even) {
+            background: rgba(2,6,23,0.5);
+        }
+
+        .active {
+            color: #22c55e;
+            font-weight: bold;
+        }
+
+        .cancelled {
+            color: #ef4444;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="header">
+    <h2>ADMIN PANEL</h2>
+    <a href="/logout">Logout</a>
+</div>
+
+<div class="container">
+
+<table>
+
+<tr>
+    <th>Visitor</th>
+    <th>Museum</th>
+    <th>Date</th>
+    <th>Tickets</th>
+    <th>Status</th>
+</tr>
+
+{% for b in bookings %}
+<tr>
+
+    <td>{{ b.username }}</td>
+    <td>{{ b.name }}</td>
+    <td>{{ b.visit_date }}</td>
+    <td>{{ b.tickets }}</td>
+
+    <td>
+        {% if b.status == 'ACTIVE' %}
+            <span class="active">ACTIVE</span>
+        {% else %}
+            <span class="cancelled">CANCELLED</span>
+        {% endif %}
+    </td>
+
+</tr>
+{% endfor %}
+
+</table>
+
+</div>
+
+</body>
+</html>

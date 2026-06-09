@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Login | Smart Museum</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:#f8fafc;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+
+.container{
+
+    width:100%;
+    max-width:1100px;
+
+    background:white;
+
+    border-radius:25px;
+
+    overflow:hidden;
+
+    display:flex;
+
+    box-shadow:0 20px 50px rgba(0,0,0,.15);
+}
+
+/* LEFT */
+
+.left{
+
+    flex:1;
+
+    background:linear-gradient(
+        135deg,
+        #8B5E3C,
+        #6B4423
+    );
+
+    color:white;
+
+    padding:60px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+}
+
+.left h1{
+
+    font-size:48px;
+
+    margin-bottom:20px;
+}
+
+.left h2{
+
+    font-size:28px;
+
+    margin-bottom:25px;
+
+    color:#D4AF37;
+}
+
+.left p{
+
+    line-height:1.8;
+
+    margin-bottom:15px;
+
+    opacity:.95;
+}
+
+.feature{
+
+    margin-top:15px;
+
+    font-size:18px;
+}
+
+/* RIGHT */
+
+.right{
+
+    flex:1;
+
+    padding:60px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+}
+
+.form-title{
+
+    font-size:34px;
+
+    color:#8B5E3C;
+
+    margin-bottom:10px;
+}
+
+.subtitle{
+
+    color:#6b7280;
+
+    margin-bottom:30px;
+}
+
+input{
+
+    width:100%;
+
+    padding:14px;
+
+    margin-bottom:18px;
+
+    border:1px solid #d1d5db;
+
+    border-radius:10px;
+
+    font-size:15px;
+
+    outline:none;
+
+    transition:.3s;
+}
+
+input:focus{
+
+    border-color:#D4AF37;
+}
+
+button{
+
+    width:100%;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#D4AF37;
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+button:hover{
+
+    background:#c89d25;
+}
+
+.error{
+
+    background:#fee2e2;
+
+    color:#dc2626;
+
+    padding:12px;
+
+    border-radius:10px;
+
+    margin-bottom:15px;
+}
+
+.success{
+
+    background:#dcfce7;
+
+    color:#16a34a;
+
+    padding:12px;
+
+    border-radius:10px;
+
+    margin-bottom:15px;
+}
+
+.signup-link{
+
+    text-align:center;
+
+    margin-top:20px;
+}
+
+.signup-link a{
+
+    color:#8B5E3C;
+
+    font-weight:600;
+
+    text-decoration:none;
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+    .container{
+        flex-direction:column;
+    }
+
+    .left,
+    .right{
+        padding:40px;
+    }
+
+    .left h1{
+        font-size:36px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- LEFT SIDE -->
+
+    <div class="left">
+
+        <h1>SMART MUSEUM</h1>
+
+        <h2>Welcome Back</h2>
+
+        <p>
+            Access your museum account to manage bookings,
+            view digital tickets and explore cultural heritage.
+        </p>
+
+        <div class="feature">✓ Secure Login</div>
+        <div class="feature">✓ QR Ticket Access</div>
+        <div class="feature">✓ Booking History</div>
+        <div class="feature">✓ Museum Visitor Portal</div>
+
+    </div>
+
+    <!-- RIGHT SIDE -->
+
+    <div class="right">
+
+        <div class="form-title">
+            Login
+        </div>
+
+        <div class="subtitle">
+            Enter your credentials to continue
+        </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% for category, message in messages %}
+            <div class="{{ category }}">
+                {{ message }}
+            </div>
+          {% endfor %}
+        {% endwith %}
+
+        {% if error %}
+            <div class="error">
+                {{ error }}
+            </div>
+        {% endif %}
+
+        <form method="POST" autocomplete="off">
+
+            <input
+                type="text"
+                name="user_login"
+                placeholder="Username"
+                autocomplete="off"
+                required
+            >
+
+            <input
+                type="password"
+                name="user_pass"
+                placeholder="Password"
+                autocomplete="new-password"
+                required
+            >
+
+            <button type="submit">
+                Login
+            </button>
+
+        </form>
+
+        <div class="signup-link">
+
+            Don't have an account?
+
+            <a href="/signup">
+                Create Account
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
+

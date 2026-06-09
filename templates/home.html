@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Smart Museum | Government Museum Chennai</title>
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: #f8fafc;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 8%;
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: #8B5E3C;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #1f2937;
+            font-weight: 600;
+            transition: .3s;
+        }
+
+        .nav-links a:hover {
+            color: #D4AF37;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .login-btn,
+        .signup-btn {
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: .3s;
+        }
+
+        .login-btn {
+            color: #8B5E3C;
+            border: 2px solid #8B5E3C;
+        }
+
+        .login-btn:hover {
+            background: #8B5E3C;
+            color: white;
+        }
+
+        .signup-btn {
+            background: #D4AF37;
+            color: white;
+        }
+
+        .signup-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* HERO */
+
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, .45),
+                rgba(0, 0, 0, .45)),
+            url('{{ url_for("static", filename="images/hero.jpg") }}');
+
+            background-size: cover;
+            background-position: center;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+
+            color: white;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            padding: 20px;
+            margin-top: 70px;
+        }
+
+        .hero-content h1 {
+            font-size: 64px;
+            margin-bottom: 20px;
+            animation: fadeDown 1s ease;
+        }
+
+        .hero-content p {
+            font-size: 22px;
+            line-height: 1.8;
+            margin-bottom: 35px;
+            animation: fadeUp 1s ease;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        /* SECTION TITLE */
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 40px;
+            color: #8B5E3C;
+            margin-bottom: 10px;
+        }
+
+        .section-title p {
+            color: #6b7280;
+        }
+
+        /* ABOUT */
+
+        .about {
+            padding: 100px 8%;
+            background: white;
+        }
+
+        .about-container {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            flex-wrap: wrap;
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-text h3 {
+            font-size: 34px;
+            color: #8B5E3C;
+            margin-bottom: 20px;
+        }
+
+        .about-text p {
+            line-height: 1.9;
+            color: #4b5563;
+            margin-bottom: 15px;
+        }
+
+        .about-image {
+            flex: 1;
+        }
+
+        .about-image img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, .15);
+        }
+
+        /* HIGHLIGHTS */
+
+        .highlights {
+            padding: 100px 8%;
+            background: #f8fafc;
+        }
+
+        .highlight-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .highlight-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, .08);
+            transition: .4s;
+        }
+
+        .highlight-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .highlight-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 25px;
+        }
+
+        .card-content h3 {
+            color: #8B5E3C;
+            margin-bottom: 12px;
+        }
+
+        .card-content p {
+            color: #6b7280;
+            line-height: 1.7;
+        }
+
+        /* STATS */
+
+        .stats {
+            padding: 80px 8%;
+            background: #8B5E3C;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            text-align: center;
+        }
+
+        .stat-box h2 {
+            color: #D4AF37;
+            font-size: 42px;
+        }
+
+        .stat-box p {
+            color: white;
+            margin-top: 10px;
+        }
+
+        /* GALLERY */
+
+        .gallery-preview {
+            padding: 100px 8%;
+            background: white;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .gallery-grid img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 20px;
+            transition: .4s;
+        }
+
+        .gallery-grid img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, .2);
+        }
+
+        /* VISITOR INFO */
+
+        .visitor-info {
+            padding: 100px 8%;
+            background: white;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .info-card {
+            background: #ffffff;
+            padding: 35px;
+            text-align: center;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, .08);
+            transition: .3s;
+        }
+
+        .info-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .icon {
+            font-size: 45px;
+            margin-bottom: 15px;
+        }
+
+        .info-card h3 {
+            color: #8B5E3C;
+            margin-bottom: 15px;
+        }
+
+        .info-card p {
+            color: #6b7280;
+            line-height: 1.8;
+        }
+
+        /* FEATURES */
+
+        .features {
+            padding: 100px 8%;
+            background: #f8fafc;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 35px;
+            text-align: center;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, .08);
+            transition: .3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            font-size: 50px;
+            margin-bottom: 15px;
+        }
+
+        .feature-card h3 {
+            color: #8B5E3C;
+            margin-bottom: 15px;
+        }
+
+        .feature-card p {
+            color: #6b7280;
+            line-height: 1.7;
+        }
+
+        /* PROCESS SECTION */
+
+        .process {
+            padding: 100px 8%;
+            background: white;
+        }
+
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 30px;
+        }
+
+        .process-card {
+            background: #f8fafc;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, .08);
+            transition: .3s;
+        }
+
+        .process-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: #D4AF37;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: auto;
+            margin-bottom: 20px;
+        }
+
+        .process-card h3 {
+            color: #8B5E3C;
+            margin-bottom: 15px;
+        }
+
+        .process-card p {
+            color: #6b7280;
+            line-height: 1.7;
+        }
+
+        /* CTA */
+
+        .cta {
+            background: linear-gradient(rgba(139, 94, 60, .9),
+                    rgba(139, 94, 60, .9));
+            padding: 100px 8%;
+            text-align: center;
+            color: white;
+        }
+
+        .cta-content h2 {
+            font-size: 56px;
+            margin-bottom: 20px;
+        }
+
+        .cta-content p {
+            font-size: 18px;
+            max-width: 700px;
+            margin: auto;
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            background: #D4AF37;
+            color: white;
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: .3s;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-4px);
+        }
+
+        /* FOOTER */
+
+        .footer {
+            background: #1f2937;
+            color: white;
+            padding: 60px 8% 20px;
+        }
+
+        .footer-content {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: flex-start;
+
+            gap: 80px;
+
+            flex-wrap: wrap;
+        }
+
+        .footer-left {
+            flex: 1;
+        }
+
+        .footer-left h2 {
+
+            color: #D4AF37;
+
+            margin-bottom: 20px;
+
+            font-size: 32px;
+        }
+
+        .footer-left p {
+
+            color: #d1d5db;
+
+            line-height: 1.8;
+
+            margin-bottom: 10px;
+        }
+
+        .footer-right {
+            flex: 1;
+        }
+
+        .footer-right h3 {
+
+            color: #D4AF37;
+
+            margin-bottom: 20px;
+        }
+
+        .footer-right p {
+
+            color: #d1d5db;
+
+            margin-bottom: 12px;
+
+            line-height: 1.7;
+        }
+
+        .footer-bottom {
+
+            text-align: center;
+
+            margin-top: 40px;
+
+            padding-top: 20px;
+
+            border-top: 1px solid rgba(255, 255, 255, .1);
+
+            color: #9ca3af;
+        }
+
+        /* MOBILE */
+
+        @media(max-width:768px) {
+
+            .footer-content {
+                flex-direction: column;
+                gap: 30px;
+            }
+
+        }
+
+        .primary-btn,
+        .secondary-btn {
+            text-decoration: none;
+            padding: 16px 30px;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: .3s;
+        }
+
+        .primary-btn {
+            background: #D4AF37;
+            color: white;
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-4px);
+        }
+
+        .secondary-btn {
+            border: 2px solid white;
+            color: white;
+        }
+
+        .secondary-btn:hover {
+            background: white;
+            color: #111;
+        }
+
+        /* ANIMATION */
+
+        @keyframes fadeDown {
+
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        }
+
+        @keyframes fadeUp {
+
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        }
+
+        /* FLOATING BUTTON */
+
+        .floating-btn {
+            position: fixed;
+            right: 30px;
+            bottom: 30px;
+
+            background: #D4AF37;
+            color: white;
+
+            text-decoration: none;
+
+            padding: 15px 25px;
+
+            border-radius: 50px;
+
+            font-weight: bold;
+
+            box-shadow: 0 10px 25px rgba(0, 0, 0, .2);
+
+            z-index: 999;
+        }
+
+        .floating-btn:hover {
+            transform: translateY(-3px);
+        }
+
+        /* MOBILE */
+
+        @media(max-width:768px) {
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .auth-buttons {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .hero-content h1 {
+                font-size: 40px;
+            }
+
+            .hero-content p {
+                font-size: 18px;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            Smart Museum
+        </div>
+
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#about">Museum</a>
+            <a href="#visitor">Visitor Info</a>
+            <a href="#footer">Contact</a>
+        </div>
+
+        <div class="auth-buttons">
+
+            <a href="/login" class="login-btn">
+                Login
+            </a>
+
+            <a href="/signup" class="signup-btn">
+                Sign Up
+            </a>
+
+        </div>
+
+    </nav>
+
+    <!-- HERO SECTION -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <h1>
+                Government Museum Chennai
+            </h1>
+
+            <p>
+                Discover centuries of history, culture,
+                archaeology and art through one of India's
+                oldest and most prestigious museums.
+                Book your visit online and enjoy a seamless
+                museum experience.
+            </p>
+
+            <div class="hero-buttons">
+
+                <a href="/signup" class="primary-btn">
+                    Book Tickets
+                </a>
+
+                <a href="#about" class="secondary-btn">
+                    Explore Museum
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+    <!-- ABOUT SECTION -->
+
+    <section id="about" class="about">
+
+        <div class="section-title">
+            <h2>About the Museum</h2>
+            <p>Preserving India's cultural heritage for future generations.</p>
+        </div>
+
+        <div class="about-container">
+
+            <div class="about-text">
+
+                <h3>Government Museum Chennai</h3>
+
+                <p>
+                    Established in 1851, the Government Museum Chennai is one of
+                    India's oldest museums and a landmark institution for art,
+                    archaeology, anthropology, zoology and history.
+                </p>
+
+                <p>
+                    The museum attracts thousands of visitors every year and
+                    showcases priceless collections that tell the story of
+                    India's rich civilization and cultural legacy.
+                </p>
+
+                <p>
+                    Through our online booking platform, visitors can reserve
+                    tickets, manage bookings and access QR-based entry
+                    verification for a seamless experience.
+                </p>
+
+            </div>
+
+            <div class="about-image">
+
+                <img src="{{ url_for('static', filename='images/hero.jpg') }}">
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- MUSEUM HIGHLIGHTS -->
+
+    <section class="highlights">
+
+        <div class="section-title">
+
+            <h2>Museum Highlights</h2>
+
+            <p>
+                Explore some of the most popular galleries and collections.
+            </p>
+
+        </div>
+
+        <div class="highlight-grid">
+
+            <!-- CARD 1 -->
+
+            <div class="highlight-card">
+
+                <img src="{{ url_for('static', filename='images/bronze.jpg') }}">
+
+                <div class="card-content">
+
+                    <h3>Bronze Gallery</h3>
+
+                    <p>
+                        Home to the world-famous Chola bronze sculptures,
+                        showcasing exceptional craftsmanship and artistry.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- CARD 2 -->
+
+            <div class="highlight-card">
+
+                <img src="{{ url_for('static', filename='images/archaeology.jpg') }}">
+
+                <div class="card-content">
+
+                    <h3>Archaeology Gallery</h3>
+
+                    <p>
+                        Discover ancient inscriptions, relics, coins and
+                        archaeological treasures from various dynasties.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- CARD 3 -->
+
+            <div class="highlight-card">
+
+                <img src="{{ url_for('static', filename='images/history.jpg') }}">
+
+                <div class="card-content">
+
+                    <h3>Natural History</h3>
+
+                    <p>
+                        Explore fascinating exhibits featuring rare specimens,
+                        wildlife displays and geological collections.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- CARD 4 -->
+
+            <div class="highlight-card">
+
+                <img src="{{ url_for('static', filename='images/children.jpg') }}">
+
+                <div class="card-content">
+
+                    <h3>Children's Museum</h3>
+
+                    <p>
+                        Interactive exhibits designed to inspire curiosity
+                        and learning among young visitors.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+    <section class="stats">
+
+        <div class="stats-container">
+
+            <div class="stat-box">
+                <h2>50,000+</h2>
+                <p>Visitors Annually</p>
+            </div>
+
+            <div class="stat-box">
+                <h2>170+</h2>
+                <p>Years of Heritage</p>
+            </div>
+
+            <div class="stat-box">
+                <h2>10+</h2>
+                <p>Museum Galleries</p>
+            </div>
+
+            <div class="stat-box">
+                <h2>100,000+</h2>
+                <p>Collections</p>
+            </div>
+
+        </div>
+
+    </section>
+    <section class="gallery-preview">
+
+        <div class="section-title">
+
+            <h2>Gallery Preview</h2>
+
+            <p>
+                A glimpse into the museum experience.
+            </p>
+
+        </div>
+
+        <div class="gallery-grid">
+
+            <img src="{{ url_for('static', filename='images/bronze.jpg') }}">
+
+            <img src="{{ url_for('static', filename='images/archaeology.jpg') }}">
+
+            <img src="{{ url_for('static', filename='images/history.jpg') }}">
+
+        </div>
+
+    </section>
+    <!-- VISITOR INFORMATION -->
+
+    <section id="visitor" class="visitor-info">
+
+        <div class="section-title">
+
+            <h2>Visitor Information</h2>
+
+            <p>
+                Plan your visit with all the essential information.
+            </p>
+
+        </div>
+
+        <div class="info-grid">
+
+            <!-- TIMINGS -->
+
+            <div class="info-card">
+
+                <div class="icon">🕒</div>
+
+                <h3>Opening Hours</h3>
+
+                <p>Monday - Sunday</p>
+                <p>9:30 AM - 5:00 PM</p>
+
+            </div>
+
+            <!-- TICKET PRICE -->
+
+            <div class="info-card">
+
+                <div class="icon">🎟️</div>
+
+                <h3>Ticket Pricing</h3>
+
+                <p>Adults : ₹50</p>
+                <p>Students : ₹25</p>
+                <p>Children : Free</p>
+
+            </div>
+
+            <!-- LOCATION -->
+
+            <div class="info-card">
+
+                <div class="icon">📍</div>
+
+                <h3>Location</h3>
+
+                <p>Pantheon Road</p>
+                <p>Egmore</p>
+                <p>Chennai, Tamil Nadu</p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- WHY BOOK ONLINE -->
+
+    <section class="features">
+
+        <div class="section-title">
+
+            <h2>Why Book Online?</h2>
+
+            <p>
+                Enjoy a smarter and more convenient museum experience.
+            </p>
+
+        </div>
+
+        <div class="feature-grid">
+
+            <!-- FEATURE 1 -->
+
+            <div class="feature-card">
+
+                <div class="feature-icon">⚡</div>
+
+                <h3>Instant Booking</h3>
+
+                <p>
+                    Reserve tickets within seconds without standing in queues.
+                </p>
+
+            </div>
+
+            <!-- FEATURE 2 -->
+
+            <div class="feature-card">
+
+                <div class="feature-icon">📱</div>
+
+                <h3>QR Ticket Access</h3>
+
+                <p>
+                    Receive digital tickets with QR verification.
+                </p>
+
+            </div>
+
+            <!-- FEATURE 3 -->
+
+            <div class="feature-card">
+
+                <div class="feature-icon">🔒</div>
+
+                <h3>Secure Accounts</h3>
+
+                <p>
+                    Protected login system with booking management.
+                </p>
+
+            </div>
+
+            <!-- FEATURE 4 -->
+
+            <div class="feature-card">
+
+                <div class="feature-icon">📋</div>
+
+                <h3>Booking History</h3>
+
+                <p>
+                    View and manage your previous reservations anytime.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+    <!-- BOOKING PROCESS -->
+
+    <section class="process">
+
+        <div class="section-title">
+
+            <h2>How It Works</h2>
+
+            <p>
+                Book your museum visit in just a few simple steps.
+            </p>
+
+        </div>
+
+        <div class="process-grid">
+
+            <div class="process-card">
+                <div class="step-number">1</div>
+                <h3>Create Account</h3>
+                <p>
+                    Register and create your museum visitor account.
+                </p>
+            </div>
+
+            <div class="process-card">
+                <div class="step-number">2</div>
+                <h3>Book Ticket</h3>
+                <p>
+                    Select your visit date and reserve your tickets.
+                </p>
+            </div>
+
+            <div class="process-card">
+                <div class="step-number">3</div>
+                <h3>Receive QR Ticket</h3>
+                <p>
+                    Instantly receive your digital museum ticket.
+                </p>
+            </div>
+
+            <div class="process-card">
+                <div class="step-number">4</div>
+                <h3>Verify Entry</h3>
+                <p>
+                    Present your QR ticket for quick verification.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- CTA SECTION -->
+
+    <section class="cta">
+
+        <div class="cta-content">
+
+            <h2>
+                Ready to Explore History?
+            </h2>
+
+            <p>
+                Discover centuries of heritage, culture and knowledge
+                through one of India's most iconic museums.
+            </p>
+
+            <a href="/signup" class="cta-btn">
+                Book Tickets Now
+            </a>
+
+        </div>
+
+    </section>
+
+    <!-- FOOTER -->
+
+    <footer id="footer" class="footer">
+
+        <div class="footer-content">
+
+            <div class="footer-left">
+
+                <h2>Smart Museum</h2>
+
+                <p>
+                    Government Museum Chennai Ticket Booking &
+                    Visitor Management System.
+                </p>
+
+                <p>
+                    Making museum visits simple, secure and accessible.
+                </p>
+
+            </div>
+
+            <div class="footer-right">
+
+                <h3>Contact Us</h3>
+
+                <p>📍 Government Museum, Egmore, Chennai</p>
+
+                <p>📧 support@smartmuseum.com</p>
+
+                <p>📞 +91 XXXXX XXXXX</p>
+
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+
+            © 2026 Smart Museum. All Rights Reserved.
+
+        </div>
+
+    </footer>
+
+    <a href="/signup" class="floating-btn">
+        Book Ticket
+    </a>
+
+</body>
+
+</html>

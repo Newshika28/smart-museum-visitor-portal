@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Digital Museum Pass</title>
+
+    <style>
+
+        body{
+            background:#0f172a;
+            color:white;
+            font-family:'Segoe UI';
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            min-height:100vh;
+        }
+
+        .card{
+            background:#1e293b;
+            width:450px;
+            padding:40px;
+            border-radius:20px;
+            text-align:center;
+        }
+
+        h1{
+            color:#facc15;
+        }
+
+        .qr img{
+            width:220px;
+            background:white;
+            padding:10px;
+            border-radius:12px;
+        }
+
+        .info{
+            margin:15px 0;
+        }
+
+        a{
+            display:inline-block;
+            margin-top:20px;
+            background:#facc15;
+            color:black;
+            padding:12px 20px;
+            border-radius:10px;
+            text-decoration:none;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <h1>🎟 Digital Museum Pass</h1>
+
+    <div class="info">
+        Booking ID : {{ booking.id }}
+    </div>
+
+    <div class="info">
+        Museum : {{ booking.name }}
+    </div>
+
+    <div class="info">
+        Date : {{ booking.visit_date }}
+    </div>
+
+    <div class="info">
+        Adults : {{ booking.adults }}
+    </div>
+
+    <div class="info">
+        Children : {{ booking.children }}
+    </div>
+
+    <div class="info">
+        Total Amount : ₹{{ booking.total_amount }}
+    </div>
+
+    <div class="qr">
+
+        <img src="{{ url_for('static',
+            filename='qrcodes/' + booking.id|string + '.png') }}">
+
+    </div>
+
+    <a href="/history">
+        Back to My Bookings
+    </a>
+
+</div>
+
+</body>
+</html>

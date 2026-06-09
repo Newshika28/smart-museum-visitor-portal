@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>My Bookings | Smart Museum</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI';
+            background: linear-gradient(135deg, #020617, #0f172a);
+            color: white;
+        }
+
+        /* HEADER */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 40px;
+            background: rgba(2, 6, 23, 0.9);
+        }
+
+        .header h2 {
+            color: #facc15;
+        }
+
+        .header a {
+            color: #cbd5f5;
+            text-decoration: none;
+            margin-left: 15px;
+        }
+
+        .header a:hover {
+            color: #facc15;
+        }
+
+        /* CONTAINER */
+        .container {
+            padding: 40px;
+        }
+
+        /* TABLE */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(30, 41, 59, 0.8);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th,
+        td {
+            padding: 15px;
+            text-align: center;
+        }
+
+        th {
+            background: #020617;
+            color: #facc15;
+        }
+
+        tr:nth-child(even) {
+            background: rgba(2, 6, 23, 0.5);
+        }
+
+        /* STATUS */
+        .active {
+            color: #22c55e;
+            font-weight: bold;
+        }
+
+        .cancelled {
+            color: #ef4444;
+            font-weight: bold;
+        }
+
+        /* BUTTONS */
+        .cancel-btn {
+            background: #ef4444;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .cancel-btn:hover {
+            background: #dc2626;
+        }
+
+        .ticket-btn {
+            background: #facc15;
+            color: black;
+            padding: 8px 14px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .ticket-btn:hover {
+            background: #eab308;
+        }
+
+        /* TOAST */
+        .toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-20px);
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: white;
+            padding: 14px 25px;
+            border-radius: 10px;
+            font-weight: 500;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transition: all 0.4s ease;
+            z-index: 999;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* EMPTY */
+        .empty {
+            text-align: center;
+            margin-top: 60px;
+            color: #cbd5f5;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <div class="header">
+        <h2>My Bookings</h2>
+
+        <div>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </div>
+
+    <!-- SUCCESS TOAST -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% for category, message in messages %}
+    <div class="toast show">{{ message }}</div>
+    {% endfor %}
+    {% endwith %}
+
+    <div class="container">
+
+        {% if bookings %}
+
+        <table>
+
+            <!-- TABLE HEADER -->
+            <tr>
+                <th>Museum</th>
+                <th>Date</th>
+                <th>Tickets</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th>View Ticket</th>
+                <th>Action</th>
+            </tr>
+
+            <!-- DATA -->
+            {% for b in bookings %}
+            <tr>
+
+                <td>{{ b.name }}</td>
+
+                <td>{{ b.visit_date }}</td>
+
+                <td>{{ b.adults }} Adults, {{ b.children }} Children</td>
+
+                <td>₹{{ b.total_amount }}</td>
+
+                <!-- STATUS -->
+                <td>
+                    {% if b.status == 'ACTIVE' %}
+                    <span class="active">ACTIVE</span>
+                    {% else %}
+                    <span class="cancelled">CANCELLED</span>
+                    {% endif %}
+                </td>
+
+                <!-- VIEW TICKET -->
+                <td>
+
+                    <a class="ticket-btn" href="/ticket/{{ b.id }}">
+                        View Ticket
+                    </a>
+
+                </td>
+
+
+                <!-- CANCEL BUTTON -->
+                <td>
+
+                    {% if b.status == 'ACTIVE' %}
+                    <form action="/cancel/{{ b.id }}" method="POST">
+
+                        <button class="cancel-btn">
+                            Cancel
+                        </button>
+
+                    </form>
+                    {% else %}
+                    --
+                    {% endif %}
+
+                </td>
+
+            </tr>
+            {% endfor %}
+
+        </table>
+
+        {% else %}
+
+        <div class="empty">
+            <h3>No bookings yet</h3>
+            <p>Go to dashboard and book your first ticket</p>
+        </div>
+
+        {% endif %}
+
+    </div>
+
+    <!-- AUTO HIDE TOAST -->
+    <script>
+        setTimeout(() => {
+            const toast = document.querySelector('.toast');
+
+            if (toast) {
+                toast.classList.remove('show');
+            }
+        }, 2000);
+    </script>
+
+</body>
+
+</html>
